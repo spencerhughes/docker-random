@@ -4,8 +4,6 @@ MAINTAINER spencer@somanydoors.ca
 
 RUN apt-get -qq update && \
 	apt-get -qq install \
-		mariadb-client \
-		mariadb-server \
 		php7.0 \
 		php7.0-mysql \
 		apache2 \
@@ -24,4 +22,13 @@ RUN apt-get -qq update && \
 		php7.0-gmp \
 		php-apcu \
 		php-imagick \
-		ffmpeg
+		ffmpeg \
+		wget
+
+RUN cd / && \
+	wget -q https://download.nextcloud.com/server/releases/nextcloud-14.0.3.tar.bz2 && \
+	cd /var/www/html && \
+	tar -xjf /nextcloud-*.tar.bz2 --strip=1 && \
+	rm /nextcloud-*.tar.bz2
+
+CMD apachectl -D FOREGROUND
